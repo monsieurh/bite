@@ -1,0 +1,6 @@
+{
+  "name": "smoothed_values",
+  "version": "0.1.0",
+  "description": "Simpler way to use Mathf.SmoothDamp and Vector3.SmoothDamp",
+  "category": []
+}

@@ -1,0 +1,6 @@
+{
+  "name": "populate",
+  "version": "0.1.0",
+  "description": "Get rid of `GetComponent<>` in your files",
+  "category": []
+}
