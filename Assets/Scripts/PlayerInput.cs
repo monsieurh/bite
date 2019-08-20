@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerInput : MonoBehaviour
 {
     private bool isDown;
     private Vector2 startPosition;
     private Vector2 currentPosition;
+    public UnityEvent onUp;
 
     public Vector2 Delta => isDown ? currentPosition - startPosition : Vector2.zero;
 
@@ -19,6 +21,7 @@ public class PlayerInput : MonoBehaviour
     {
         isDown = false;
         OnSet(mousePosition);
+        onUp?.Invoke();
     }
 
     private void OnDown(Vector2 mousePosition)
