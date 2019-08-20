@@ -18,7 +18,7 @@ public class Card : MonoBehaviour
         initialPosition = transform.position;
         offset = new SmoothedFloat(smoothTime);
         this.Populate();
-        input.onUp.AddListener(() => ValidateCard());
+        input.onUp.AddListener(ValidateCard);
     }
 
     private void Update()
@@ -32,6 +32,7 @@ public class Card : MonoBehaviour
     private void ValidateCard()
     {
         animator.SetTrigger(OnDecision);
+        Destroy(gameObject, 0.5f);
         if (offset > 0) Accept();
         else Decline();
     }
