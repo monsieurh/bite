@@ -1,11 +1,13 @@
 using System.Collections;
 using mpm_modules.Populate;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(CardGenerator))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private float delayBeforeNextCard;
+    [SerializeField] private GameObject gameOverGui;
     public bool IsAlive => Sex > 0 && Sex < 1 && Love > 0 && Love < 1;
     [GetComponent] private CardGenerator cardGenerator;
     public float Sex { get; private set; } = 0.5f;
@@ -14,6 +16,7 @@ public class Player : MonoBehaviour
     private IEnumerator Start()
     {
         this.Populate();
+        gameOverGui.SetActive(false);
         while (IsAlive)
         {
             Card currentCard = DrawCard();
@@ -21,6 +24,10 @@ public class Player : MonoBehaviour
             Apply(currentCard);
             yield return new WaitForSecondsRealtime(delayBeforeNextCard);
         }
+
+        gameOverGui.SetActive(true);
+        yield return WaitForClick();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void Apply(Card card)
@@ -43,6 +50,7 @@ public class Player : MonoBehaviour
     }
 
     //TODO: you lazy bitch
+
     public float this[string statName]
     {
         get
@@ -57,5 +65,10 @@ public class Player : MonoBehaviour
                     return 0;
             }
         }
+    }
+
+    private static IEnumerator WaitForClick()
+    {
+        yield return new WaitUntil(() => Input.GetMouseButton(0));
     }
 }
