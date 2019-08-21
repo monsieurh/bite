@@ -21,9 +21,16 @@ namespace UI
 
         private void Update()
         {
+            filler.color = GetColor(player.ExpectedBonus(statName));
             smoothedFloat.Value = player[statName];
             smoothedFloat.Update(Time.deltaTime);
             filler.fillAmount = Mathf.Clamp01(smoothedFloat);
+        }
+
+        private Color GetColor(float expectedBonus)
+        {
+            if (expectedBonus == 0) return Color.white;
+            return expectedBonus < 0 ? Color.red : Color.green;
         }
     }
 }

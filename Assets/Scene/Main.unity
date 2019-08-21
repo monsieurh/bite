@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statName: Love
-  smoothTime: 0.4
+  smoothTime: 0.2
   filler: {fileID: 1194083047}
 --- !u!1 &230939874
 GameObject:
@@ -577,7 +577,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 653938648268187590, guid: edc73cd2fa784711793490d91b6a3007,
     type: 3}
-  randomAmount: 0.5
+  randomAmount: 0.3
   names:
   - Brenda
   - Kathia
@@ -717,7 +717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statName: Sex
-  smoothTime: 0.4
+  smoothTime: 0.2
   filler: {fileID: 938509017}
 --- !u!1 &684053726
 GameObject:

@@ -47,8 +47,10 @@ public class CardGenerator : MonoBehaviour
     public Card GenerateCard()
     {
         Card card = Instantiate(cardPrefab, transform);
-        card.love = Random.Range(-randomAmount, randomAmount);
-        card.sex = Random.Range(-randomAmount, randomAmount);
+        int derp = Random.Range(1, 4);
+        if ((derp & 1) == 1) card.love = Random.Range(-randomAmount, randomAmount);
+        if ((derp & 2) == 2) card.sex = Random.Range(-randomAmount, randomAmount);
+
         card.CharacterName = names[Random.Range(0, names.Count)];
         return card;
     }
