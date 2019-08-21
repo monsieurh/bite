@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class Card : MonoBehaviour
 {
     [SerializeField] private float smoothTime = 1;
+    [SerializeField] private float deadZone = 50;
     [FindObjectOfType] private PlayerInput input;
     [GetComponent] private Animator animator;
     [GetComponentInChildren] private Text nameText;
@@ -23,15 +24,15 @@ public class Card : MonoBehaviour
     private SmoothedFloat offset;
     private static readonly int X = Animator.StringToHash("x");
     private static readonly int OnDecision = Animator.StringToHash("onDecision");
-    public float love;
-    public float sex;
+    [HideInInspector] public float love;
+    [HideInInspector] public float sex;
 
 
     private void Awake()
     {
         initialPosition = transform.position;
         offset = new SmoothedFloat(smoothTime);
-        this.Populate();
+        if (!this.Populate()) enabled = false;
         input.onUp.AddListener(ValidateCard);
     }
 
@@ -40,15 +41,47 @@ public class Card : MonoBehaviour
         if (!IsSwiped) offset.Value = input.Delta.x;
         offset.Update(Time.deltaTime);
         transform.position = initialPosition + new Vector2(offset, 0);
-        animator.SetFloat(X, offset);
+        animator.SetFloat(X, IsSwiping() ? offset : 0f);
+    }
+
+    private bool IsSwiping()
+    {
+        return Mathf.Abs(offset) > deadZone;
+    }
+
+    public bool IsSwipingRight()
+    {
+        return IsSwiping() && offset > 0;
+    }
+
+    public bool IsSwipingLeft()
+    {
+        return IsSwiping() && offset < 0;
     }
 
     private void ValidateCard()
     {
-        if (IsSwiped) return;
+        if (IsSwiped || !IsSwiping()) return;
         IsSwiped = true;
         animator.SetTrigger(OnDecision);
         IsAccepted = offset > 0;
         Destroy(gameObject, 0.5f);
+    }
+
+    public float Bonus(string statName)
+    {
+        float multiplier = 0;
+        if (IsSwipingLeft()) multiplier = -1f;
+        if (IsSwipingRight()) multiplier = 1f;
+
+        switch (statName)
+        {
+            case "Love":
+                return love * multiplier;
+            case "Sex":
+                return sex * multiplier;
+            default:
+                return 0;
+        }
     }
 }

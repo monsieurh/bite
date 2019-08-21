@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject gameOverGui;
     public bool IsAlive => Sex > 0 && Sex < 1 && Love > 0 && Love < 1;
     [GetComponent] private CardGenerator cardGenerator;
+    private Card currentCard;
     public float Sex { get; private set; } = 0.5f;
     public float Love { get; private set; } = 0.5f;
 
@@ -19,7 +20,7 @@ public class Player : MonoBehaviour
         gameOverGui.SetActive(false);
         while (IsAlive)
         {
-            Card currentCard = DrawCard();
+            currentCard = DrawCard();
             yield return new WaitUntil(() => currentCard.IsSwiped);
             Apply(currentCard);
             yield return new WaitForSecondsRealtime(delayBeforeNextCard);
@@ -32,16 +33,8 @@ public class Player : MonoBehaviour
 
     private void Apply(Card card)
     {
-        if (card.IsAccepted)
-        {
-            Love += card.love;
-            Sex += card.sex;
-        }
-        else
-        {
-            Love -= card.love;
-            Sex -= card.sex;
-        }
+        Love += card.Bonus("Love");
+        Sex += card.Bonus("Sex");
     }
 
     private Card DrawCard()
@@ -50,6 +43,11 @@ public class Player : MonoBehaviour
     }
 
     //TODO: you lazy bitch
+
+    public float ExpectedBonus(string statName)
+    {
+        return currentCard.Bonus(statName);
+    }
 
     public float this[string statName]
     {

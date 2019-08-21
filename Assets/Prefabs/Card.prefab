@@ -169,7 +169,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24ff5021513e264a4941e2beae81b4d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothTime: 0.3
+  smoothTime: 0.1
+  deadZone: 150
+  love: 0
+  sex: 0
 --- !u!95 &653938648268187591
 Animator:
   serializedVersion: 3
