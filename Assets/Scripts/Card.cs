@@ -8,8 +8,8 @@ using UnityEngine.UI;
 public class Card : MonoBehaviour
 {
     [SerializeField] private float smoothTime = 1;
-    [SerializeField] private float deadZone = 50;
-    [SerializeField] private float cardEndingTargetOffset;
+    [SerializeField] private float deadZoneScreen = .5f;
+    [SerializeField, Range(0f, 1f)] private float cardEndingTargetOffset = .5f;
     [FindObjectOfType] private PlayerInput input;
     [GetComponent] private Animator animator;
     [GetComponentInChildren] private Text nameText;
@@ -28,7 +28,7 @@ public class Card : MonoBehaviour
     [HideInInspector] public float sex;
     private static readonly int SwipingLeft = Animator.StringToHash("IsSwipingLeft");
     private static readonly int SwipingRight = Animator.StringToHash("IsSwipingRight");
-
+    private float deadZone;
 
     private void Awake()
     {
@@ -36,6 +36,7 @@ public class Card : MonoBehaviour
         offset = new SmoothedFloat(smoothTime);
         if (!this.Populate()) enabled = false;
         input.onUp.AddListener(ValidateCard);
+        deadZone = Screen.width * deadZoneScreen;
     }
 
     private void Update()
