@@ -22,7 +22,6 @@ public class Card : MonoBehaviour
 
     private Vector2 initialPosition;
     private SmoothedFloat offset;
-    private static readonly int X = Animator.StringToHash("x");
     private static readonly int OnDecision = Animator.StringToHash("onDecision");
     [HideInInspector] public float love;
     [HideInInspector] public float sex;
@@ -43,7 +42,6 @@ public class Card : MonoBehaviour
         if (!IsSwiped) offset.Value = input.Delta.x;
         offset.Update(Time.deltaTime);
         transform.position = initialPosition + new Vector2(offset, 0);
-        animator.SetFloat(X, IsSwiping() ? offset : 0f);
         animator.SetBool(SwipingLeft, IsSwipingLeft());
         animator.SetBool(SwipingRight, IsSwipingRight());
     }
