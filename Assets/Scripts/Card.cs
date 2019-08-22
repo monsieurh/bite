@@ -9,6 +9,7 @@ public class Card : MonoBehaviour
 {
     [SerializeField] private float smoothTime = 1;
     [SerializeField] private float deadZone = 50;
+    [SerializeField] private float cardEndingTargetOffset;
     [FindObjectOfType] private PlayerInput input;
     [GetComponent] private Animator animator;
     [GetComponentInChildren] private Text nameText;
@@ -65,7 +66,7 @@ public class Card : MonoBehaviour
     {
         if (IsSwiped || !IsSwiping()) return;
         IsSwiped = true;
-        enabled = false;
+        offset.Value = IsSwipingLeft() ? -cardEndingTargetOffset : cardEndingTargetOffset;
         animator.SetTrigger(OnDecision);
         IsAccepted = offset > 0;
         Destroy(gameObject, 0.5f);
