@@ -8,8 +8,8 @@ using UnityEngine.UI;
 public class Card : MonoBehaviour
 {
     [SerializeField] private float smoothTime = 1;
-    [SerializeField] private float deadZoneScreen = .5f;
-    [SerializeField, Range(0f, 1f)] private float cardEndingTargetOffset = .5f;
+    [SerializeField, Range(0f, 1f)] private float deadZoneScreen = .5f;
+    [SerializeField] private float cardEndingTargetOffset;
     [FindObjectOfType] private PlayerInput input;
     [GetComponent] private Animator animator;
     [GetComponentInChildren] private Text nameText;
@@ -36,7 +36,7 @@ public class Card : MonoBehaviour
         offset = new SmoothedFloat(smoothTime);
         if (!this.Populate()) enabled = false;
         input.onUp.AddListener(ValidateCard);
-        deadZone = Screen.width * deadZoneScreen;
+        deadZone = Screen.width * (deadZoneScreen / 2f);
     }
 
     private void Update()
