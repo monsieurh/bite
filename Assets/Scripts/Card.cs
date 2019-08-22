@@ -65,6 +65,7 @@ public class Card : MonoBehaviour
     {
         if (IsSwiped || !IsSwiping()) return;
         IsSwiped = true;
+        enabled = false;
         animator.SetTrigger(OnDecision);
         IsAccepted = offset > 0;
         Destroy(gameObject, 0.5f);
