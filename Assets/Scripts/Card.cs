@@ -26,6 +26,8 @@ public class Card : MonoBehaviour
     private static readonly int OnDecision = Animator.StringToHash("onDecision");
     [HideInInspector] public float love;
     [HideInInspector] public float sex;
+    private static readonly int SwipingLeft = Animator.StringToHash("IsSwipingLeft");
+    private static readonly int SwipingRight = Animator.StringToHash("IsSwipingRight");
 
 
     private void Awake()
@@ -42,6 +44,8 @@ public class Card : MonoBehaviour
         offset.Update(Time.deltaTime);
         transform.position = initialPosition + new Vector2(offset, 0);
         animator.SetFloat(X, IsSwiping() ? offset : 0f);
+        animator.SetBool(SwipingLeft, IsSwipingLeft());
+        animator.SetBool(SwipingRight, IsSwipingRight());
     }
 
     private bool IsSwiping()
